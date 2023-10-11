@@ -7,11 +7,13 @@ import {
   createOutcome,
   deleteOutcome,
   getAllOutcomes,
+  getAllOutcomesByDateRange,
   getOutcomeTotalPrice,
   updateOutcome,
 } from "./outcomesSlice";
 import { getAllCategories } from "../Categories/categoriesSlice";
 import { getMoneyPattern } from "../../utils/regex";
+import { DateRangePicker } from "rsuite";
 
 const OutgoingsPage = () => {
   const dispatch = useDispatch();
@@ -34,11 +36,21 @@ const OutgoingsPage = () => {
         </span>
 
         <div className='flex-none'>
-          <Tabs color='primary'>
-            <Tab key='monthly' title='Oylik' />
-            <Tab key='weekly' title='Haftalik' />
-            <Tab key='daily' title='Kunlik' />
-          </Tabs>
+          <DateRangePicker
+            placement='bottomEnd'
+            onChange={(date) => {
+              if (date) {
+                dispatch(
+                  getAllOutcomesByDateRange({
+                    startDate: date[0].toISOString(),
+                    endDate: date[1].toISOString(),
+                  })
+                );
+              } else {
+                dispatch(getAllOutcomes());
+              }
+            }}
+          />
         </div>
       </div>
       <div className='flex flex-col p-3 bg-white rounded-xl gap-5'>

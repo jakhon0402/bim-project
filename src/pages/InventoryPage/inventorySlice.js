@@ -10,6 +10,16 @@ export const getAllInventory = createAsyncThunk(
   }
 );
 
+export const getAllInventoryByDateRange = createAsyncThunk(
+  "inventory/getAllByDateRange",
+  async (body) => {
+    const response = await Api.get(
+      `/inventory/find-by-date-range?startDate=${body?.startDate}&endDate=${body?.endDate}`
+    );
+    return response.data;
+  }
+);
+
 export const createInventory = createAsyncThunk(
   "inventory/create",
   async (body) => {
@@ -57,6 +67,18 @@ const inventorySlice = createSlice({
         state.inventory = action.payload?.content;
       })
       .addCase(getAllInventory.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllInventoryByDateRange.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllInventoryByDateRange.fulfilled, (state, action) => {
+        state.loading = false;
+        state.inventory = action.payload;
+      })
+      .addCase(getAllInventoryByDateRange.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

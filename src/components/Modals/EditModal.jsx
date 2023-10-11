@@ -150,6 +150,7 @@ const EditModal = ({
                           </div>
                         ) : (
                           <Input
+                            style={{ color: "#000", fontWeight: 500 }}
                             label={field.label}
                             placeholder={field.placeholder}
                             name={field.name}

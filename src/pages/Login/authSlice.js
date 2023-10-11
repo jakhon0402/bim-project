@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api from "../../config/Api";
+import { toast } from "react-toastify";
 
 export const login = createAsyncThunk("auth/login", async (body) => {
   const response = await Api.post("/account/authenticate", body);
@@ -40,6 +41,8 @@ const authSlice = createSlice({
     },
     [login.rejected]: (state, { payload }) => {
       state.loading = false;
+      toast.error("Login yoki parol xato!");
+
       state.error = payload;
     },
 

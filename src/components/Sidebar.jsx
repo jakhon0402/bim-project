@@ -13,6 +13,8 @@ import {
   WrenchScrewdriverIcon,
 } from "@heroicons/react/24/outline";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../pages/Login/authSlice";
 
 const sidebarMenus = [
   {
@@ -52,6 +54,7 @@ const ProSidebar = () => {
   const currPath = useLocation().pathname;
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   return (
     <div className='relative h-[calc(100vh_-_90px)] flex flex-none'>
@@ -120,6 +123,7 @@ const ProSidebar = () => {
           >
             <button
               onClick={() => {
+                dispatch(logout());
                 navigate("/login");
               }}
               className='flex flex-row items-center gap-3'

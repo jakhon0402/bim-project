@@ -10,6 +10,16 @@ export const getAllOutcomes = createAsyncThunk(
   }
 );
 
+export const getAllOutcomesByDateRange = createAsyncThunk(
+  "outcomes/getAllByDateRange",
+  async (body) => {
+    const response = await Api.get(
+      `/outputitem/find-by-date-range?startDate=${body?.startDate}&endDate=${body?.endDate}`
+    );
+    return response.data;
+  }
+);
+
 export const getOutcomeTotalPrice = createAsyncThunk(
   "incomes/getOutcomeTotalPrice",
   async (body = {}) => {
@@ -66,6 +76,18 @@ const outcomesSlice = createSlice({
         state.outcomes = action.payload?.content;
       })
       .addCase(getAllOutcomes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      .addCase(getAllOutcomesByDateRange.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllOutcomesByDateRange.fulfilled, (state, action) => {
+        state.loading = false;
+        state.outcomes = action.payload;
+      })
+      .addCase(getAllOutcomesByDateRange.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

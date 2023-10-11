@@ -97,7 +97,7 @@ const CreateModal = ({
                     };
 
                     handleSubmit(reqBody);
-                    // onClose();
+                    onClose();
                     return;
                   } else {
                     return;
@@ -156,7 +156,6 @@ const CreateModal = ({
                               />
                             )}
                             <Input
-                              style={{ color: "#000" }}
                               type='file'
                               onChange={(e) => {
                                 setFieldValue(field?.name, e.target.files[0]);
@@ -169,7 +168,7 @@ const CreateModal = ({
                           </div>
                         ) : (
                           <Input
-                            style={{ color: "#000" }}
+                            style={{ color: "#000", fontWeight: 500 }}
                             label={field.label}
                             // labelPlacement='outside'
                             placeholder={field.placeholder}

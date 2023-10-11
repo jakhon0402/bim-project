@@ -46,7 +46,7 @@ const INITIAL_VISIBLE_COLUMNS = [
   "id",
   "name",
   "surname",
-  "initialSalary",
+  "currentSalary",
   "attachment.id",
   "jobDescription",
   "salaryDate",
@@ -177,6 +177,15 @@ const ProTable = ({
         );
 
       case "price":
+        return (
+          <div className='flex flex-col'>
+            <span className='font-bold'>{`${
+              cellValue ? getMoneyPattern(cellValue) : ""
+            } so'm`}</span>
+          </div>
+        );
+
+      case "currentSalary":
         return (
           <div className='flex flex-col'>
             <span className='font-bold'>{`${
