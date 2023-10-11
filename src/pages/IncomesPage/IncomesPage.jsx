@@ -6,12 +6,14 @@ import {
   createIncome,
   deleteIncome,
   getAllIncomes,
+  getAllIncomesByDateRange,
   getIncomeTotalPrice,
   updateIncome,
 } from "./incomesSlice";
 import { getAllCategories } from "../Categories/categoriesSlice";
 import { fields, emptyValues, validationSchema, columns } from "./data";
-import { getMoneyPattern } from "../../utils/regex";
+import { formatDate, getMoneyPattern } from "../../utils/regex";
+import { DateRangePicker } from "rsuite";
 
 const IncomesPage = () => {
   const dispatch = useDispatch();
@@ -29,16 +31,31 @@ const IncomesPage = () => {
         <span className='flex flex-col w-full items-center bg-green-200/50 text-green-600 rounded-xl py-3'>
           Kirim{" "}
           <span className='font-bold'>{`${
-            totalPrice ? getMoneyPattern(totalPrice) : ""
+            totalPrice == 0 ? 0 : totalPrice ? getMoneyPattern(totalPrice) : ""
           } so'm`}</span>
         </span>
 
-        <div className='flex-none'>
-          <Tabs color='primary'>
+        <div className='flex-none relative'>
+          <DateRangePicker
+            placement='bottomEnd'
+            onChange={(date) => {
+              if (date) {
+                dispatch(
+                  getAllIncomesByDateRange({
+                    startDate: date[0].toISOString(),
+                    endDate: date[1].toISOString(),
+                  })
+                );
+              } else {
+                dispatch(getAllIncomes());
+              }
+            }}
+          />
+          {/* <Tabs color='primary'>
             <Tab key='monthly' title='Oylik' />
             <Tab key='weekly' title='Haftalik' />
             <Tab key='daily' title='Kunlik' />
-          </Tabs>
+          </Tabs> */}
         </div>
       </div>
       <div className='flex flex-col p-3 bg-white rounded-xl gap-5'>

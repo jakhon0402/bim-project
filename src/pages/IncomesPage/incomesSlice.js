@@ -10,6 +10,16 @@ export const getAllIncomes = createAsyncThunk(
   }
 );
 
+export const getAllIncomesByDateRange = createAsyncThunk(
+  "incomes/getAllByDateRange",
+  async (body) => {
+    const response = await Api.get(
+      `/inputitem/find-by-date-range?startDate=${body?.startDate}&endDate=${body?.endDate}`
+    );
+    return response.data;
+  }
+);
+
 export const getIncomeTotalPrice = createAsyncThunk(
   "incomes/getIncomeTotalPrice",
   async (body = {}) => {
@@ -57,6 +67,19 @@ const incomesSlice = createSlice({
         state.incomes = action.payload?.content;
       })
       .addCase(getAllIncomes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      ///------------ GET Incomes By Date Range ------------------/////
+      .addCase(getAllIncomesByDateRange.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllIncomesByDateRange.fulfilled, (state, action) => {
+        state.loading = false;
+        state.incomes = action.payload;
+      })
+      .addCase(getAllIncomesByDateRange.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

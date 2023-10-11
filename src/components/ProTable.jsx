@@ -312,7 +312,7 @@ const ProTable = ({
             onClear={() => onClear()}
             onValueChange={onSearchChange}
           />
-          <div className='flex gap-3'>
+          <div className='flex gap-3 z-0'>
             {isFilterCtg && (
               <Dropdown>
                 <DropdownTrigger className='hidden sm:flex'>
@@ -473,7 +473,11 @@ const ProTable = ({
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"Ma'lumot topilmadi."} items={sortedItems}>
+      <TableBody
+        style={{ color: "#000" }}
+        emptyContent={"Ma'lumot topilmadi."}
+        items={sortedItems}
+      >
         {(item) => (
           <TableRow key={item.id} className='h-[50px]'>
             {(columnKey) => (

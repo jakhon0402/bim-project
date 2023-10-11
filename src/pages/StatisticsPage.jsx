@@ -86,13 +86,21 @@ const StatisticsPage = () => {
         <span className='flex flex-col w-fit items-center bg-red-200/50 text-red-600 rounded-xl px-8 py-3'>
           Chiqim{" "}
           <span className='font-bold'>{`${
-            outcomeTotalPrice ? getMoneyPattern(outcomeTotalPrice) : ""
+            outcomeTotalPrice == 0
+              ? 0
+              : outcomeTotalPrice
+              ? getMoneyPattern(outcomeTotalPrice)
+              : ""
           } so'm`}</span>
         </span>
         <span className='flex flex-col w-fit items-center bg-green-200/50 text-green-600 rounded-xl px-8 py-3'>
           Kirim{" "}
           <span className='font-bold'>{`${
-            incomeTotalPrice ? getMoneyPattern(incomeTotalPrice) : ""
+            incomeTotalPrice == 0
+              ? 0
+              : incomeTotalPrice
+              ? getMoneyPattern(incomeTotalPrice)
+              : ""
           } so'm`}</span>
         </span>
       </div>

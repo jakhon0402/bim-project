@@ -109,7 +109,7 @@ const CreateModal = ({
               }}
               className='flex flex-col gap-5 w-full font-madefor'
             >
-              <ModalContent>
+              <ModalContent className='text-black font-semibold'>
                 {(onClose) => (
                   <>
                     <ModalHeader className='flex flex-col gap-1'>
@@ -119,6 +119,7 @@ const CreateModal = ({
                       {fields?.map((field, index) =>
                         field.type === "select" ? (
                           <Select
+                            style={{ color: "#000" }}
                             selectionMode='single'
                             // selectedKeys={values[field?.name]}
                             // name={field?.name}
@@ -136,7 +137,11 @@ const CreateModal = ({
                           >
                             {ctgs &&
                               ctgs.map((ctg) => (
-                                <SelectItem key={ctg?.id} value={ctg?.id}>
+                                <SelectItem
+                                  style={{ color: "#000" }}
+                                  key={ctg?.id}
+                                  value={ctg?.id}
+                                >
                                   {ctg?.name}
                                 </SelectItem>
                               ))}
@@ -151,6 +156,7 @@ const CreateModal = ({
                               />
                             )}
                             <Input
+                              style={{ color: "#000" }}
                               type='file'
                               onChange={(e) => {
                                 setFieldValue(field?.name, e.target.files[0]);
@@ -163,6 +169,7 @@ const CreateModal = ({
                           </div>
                         ) : (
                           <Input
+                            style={{ color: "#000" }}
                             label={field.label}
                             // labelPlacement='outside'
                             placeholder={field.placeholder}

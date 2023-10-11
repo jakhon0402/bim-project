@@ -29,7 +29,7 @@ const OutgoingsPage = () => {
         <span className='flex flex-col w-full items-center bg-red-200/50 text-red-600 rounded-xl py-3'>
           Chiqim{" "}
           <span className='font-bold'>{`${
-            totalPrice ? getMoneyPattern(totalPrice) : ""
+            totalPrice == 0 ? 0 : totalPrice ? getMoneyPattern(totalPrice) : ""
           } so'm`}</span>
         </span>
 

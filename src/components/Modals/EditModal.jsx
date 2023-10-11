@@ -96,7 +96,7 @@ const EditModal = ({
               }}
               className='flex flex-col gap-5 w-full font-madefor'
             >
-              <ModalContent>
+              <ModalContent className='text-black font-semibold'>
                 {(onClose) => (
                   <>
                     <ModalHeader className='flex flex-col gap-1'>

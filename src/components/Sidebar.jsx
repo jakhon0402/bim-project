@@ -104,6 +104,7 @@ const ProSidebar = () => {
           </div>
           {sidebarMenus.map((el, index) => (
             <MenuItem
+              style={{ fontWeight: "bolder" }}
               key={uniqueId()}
               active={currPath.startsWith(el.pathName)}
               component={<NavLink to={el.pathName} />}

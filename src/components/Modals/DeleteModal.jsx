@@ -25,14 +25,14 @@ const DeleteModal = ({ handleSubmit, contextText }) => {
         <TrashIcon className='w-[18px]' />
       </button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
-        <ModalContent>
+        <ModalContent className='text-black font-semibold'>
           {(onClose) => (
             <>
               <ModalHeader className='flex flex-col gap-1'>
                 {"O'chirish"}
               </ModalHeader>
               <ModalBody>
-                <span className='text-[16px]'>
+                <span className='text-[16px] font-normal'>
                   <span className='font-bold'>{contextText}</span>
                   {` ni o'chirishni xohlaysizmi?`}
                 </span>

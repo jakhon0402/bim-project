@@ -31,6 +31,17 @@ export const updateEmployee = createAsyncThunk(
   }
 );
 
+export const updateEmployeeSalary = createAsyncThunk(
+  "employees/updateSalary",
+  async (body) => {
+    const response = await Api.put(
+      `/worker/${body?.id}/update-salary?newSalary=${body?.newSalary}`,
+      body
+    );
+    return response.data;
+  }
+);
+
 export const deleteEmployee = createAsyncThunk(
   "employees/delete",
   async (body) => {
@@ -74,6 +85,9 @@ const employeesSlice = createSlice({
       .addCase(getEmployee.fulfilled, (state, action) => {
         state.loading = false;
         state.employee = action.payload;
+        state.employee.salaryChanges.sort(
+          (a, b) => new Date(b.changeDate) - new Date(a.changeDate)
+        );
       })
       .addCase(getEmployee.rejected, (state, action) => {
         state.loading = false;
@@ -120,6 +134,23 @@ const employeesSlice = createSlice({
         state.employees[ctgIndex] = payload;
       })
       .addCase(updateEmployee.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      ///------------ UPDATE employee Salary ------------------/////
+      .addCase(updateEmployeeSalary.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEmployeeSalary.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.employee = payload;
+
+        state.employee.salaryChanges.sort(
+          (a, b) => new Date(b.changeDate) - new Date(a.changeDate)
+        );
+      })
+      .addCase(updateEmployeeSalary.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });

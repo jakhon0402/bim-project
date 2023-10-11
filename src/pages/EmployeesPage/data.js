@@ -1,5 +1,22 @@
 import * as Yup from "yup";
 
+export const salaryFields = [
+  {
+    name: "newSalary",
+    type: "number",
+    label: "Yangi maosh",
+    placeholder: "Yangi maoshni kiriting...",
+  },
+];
+
+export const salaryEmptyValues = {
+  newSalary: 0,
+};
+
+export const salaryValidationSchema = Yup.object().shape({
+  newSalary: Yup.number().required("Boshlang'ich maosh is required"),
+});
+
 export const fields = [
   {
     name: "name",
