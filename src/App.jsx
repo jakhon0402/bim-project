@@ -10,6 +10,7 @@ import IncomesPage from "./pages/IncomesPage/IncomesPage";
 import OutgoingsPage from "./pages/OutcomesPage/OutgoingsPage";
 import EmployeesPage from "./pages/EmployeesPage/EmployeesPage";
 import InventoryPage from "./pages/InventoryPage/InventoryPage";
+import EmployeePage from "./pages/EmployeesPage/EmployeePage";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
             <Route path='/outgoings' element={<OutgoingsPage />} />
             <Route path='/statistics' element={<StatisticsPage />} />
             <Route path='/categories' element={<CategoriesPage />} />
+            <Route path='/employees/:id' element={<EmployeePage />} />
             <Route path='/employees' element={<EmployeesPage />} />
             <Route path='/inventory' element={<InventoryPage />} />
             <Route path='/*' element={<Navigate to='/incomes' />} />

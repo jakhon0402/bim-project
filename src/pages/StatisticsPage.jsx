@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@nextui-org/react";
-import React from "react";
+import React, { useEffect } from "react";
 
 import {
   Chart as ChartJS,
@@ -13,6 +13,10 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { faker } from "@faker-js/faker";
+import { useDispatch, useSelector } from "react-redux";
+import { getMoneyPattern } from "../utils/regex";
+import { getIncomeTotalPrice } from "./IncomesPage/incomesSlice";
+import { getOutcomeTotalPrice } from "./OutcomesPage/outcomesSlice";
 
 ChartJS.register(
   CategoryScale,
@@ -63,14 +67,33 @@ export const data = {
 };
 
 const StatisticsPage = () => {
+  const dispatch = useDispatch();
+  const { totalPrice: incomeTotalPrice } = useSelector(
+    (state) => state.incomes
+  );
+  const { totalPrice: outcomeTotalPrice } = useSelector(
+    (state) => state.outcomes
+  );
+
+  useEffect(() => {
+    dispatch(getIncomeTotalPrice());
+    dispatch(getOutcomeTotalPrice());
+  }, []);
+
   return (
     <div className='flex flex-col w-full h-full p-8 gap-8 bg-neutral-50'>
       <div className='flex flex-row w-full gap-8 items-center'>
         <span className='flex flex-col w-fit items-center bg-red-200/50 text-red-600 rounded-xl px-8 py-3'>
-          Chiqim <span className='font-bold'>40 000 000 so'm</span>
+          Chiqim{" "}
+          <span className='font-bold'>{`${
+            outcomeTotalPrice ? getMoneyPattern(outcomeTotalPrice) : ""
+          } so'm`}</span>
         </span>
         <span className='flex flex-col w-fit items-center bg-green-200/50 text-green-600 rounded-xl px-8 py-3'>
-          Kirim <span className='font-bold'>40 000 000 so'm</span>
+          Kirim{" "}
+          <span className='font-bold'>{`${
+            incomeTotalPrice ? getMoneyPattern(incomeTotalPrice) : ""
+          } so'm`}</span>
         </span>
       </div>
       <div className='flex flex-col w-full p-3 bg-white rounded-xl gap-5'>

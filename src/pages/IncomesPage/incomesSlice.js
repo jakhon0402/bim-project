@@ -10,6 +10,14 @@ export const getAllIncomes = createAsyncThunk(
   }
 );
 
+export const getIncomeTotalPrice = createAsyncThunk(
+  "incomes/getIncomeTotalPrice",
+  async (body = {}) => {
+    const response = await Api.get("/inputitem/total-price");
+    return response.data;
+  }
+);
+
 export const createIncome = createAsyncThunk("incomes/create", async (body) => {
   const response = await Api.post("/inputitem", body);
   return response.data;
@@ -29,6 +37,7 @@ const incomesSlice = createSlice({
   name: "incomes",
   initialState: {
     incomes: null,
+    totalPrice: null,
     loading: false,
     error: null,
   },
@@ -48,6 +57,19 @@ const incomesSlice = createSlice({
         state.incomes = action.payload?.content;
       })
       .addCase(getAllIncomes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      ///------------ GET Incomes Total price ------------------/////
+      .addCase(getIncomeTotalPrice.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getIncomeTotalPrice.fulfilled, (state, action) => {
+        state.loading = false;
+        state.totalPrice = action.payload;
+      })
+      .addCase(getIncomeTotalPrice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

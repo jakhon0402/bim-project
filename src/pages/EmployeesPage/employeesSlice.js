@@ -10,6 +10,11 @@ export const getAllEmployees = createAsyncThunk(
   }
 );
 
+export const getEmployee = createAsyncThunk("employees/get", async (body) => {
+  const response = await Api.get(`/worker/${body}`);
+  return response.data;
+});
+
 export const createEmployee = createAsyncThunk(
   "employees/create",
   async (body) => {
@@ -38,6 +43,7 @@ const employeesSlice = createSlice({
   name: "employees",
   initialState: {
     employees: null,
+    employee: null,
     loading: false,
     error: null,
   },
@@ -57,6 +63,19 @@ const employeesSlice = createSlice({
         state.employees = action.payload?.content;
       })
       .addCase(getAllEmployees.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      ///------------ GET employee ------------------/////
+      .addCase(getEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEmployee.fulfilled, (state, action) => {
+        state.loading = false;
+        state.employee = action.payload;
+      })
+      .addCase(getEmployee.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

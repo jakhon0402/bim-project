@@ -15,6 +15,28 @@ import {
 } from "@nextui-org/react";
 import { Formik } from "formik";
 import React from "react";
+import Api from "../../config/Api";
+
+const handleUpload = async (file) => {
+  if (file) {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const response = await Api.post("/fayl/upload", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // Important for sending FormData
+        },
+      });
+
+      console.log(response?.data);
+      return response?.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  }
+};
 
 const EditModal = ({
   fields,
@@ -52,13 +74,23 @@ const EditModal = ({
             setFieldValue,
           }) => (
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 e.preventDefault();
 
                 if ("categoryId" in values) {
                   values["categoryId"] = +[...values["categoryId"]][0];
                 }
-
+                values["fileEntityId"] = initialValues?.fileEntityId;
+                if ("imageFile" in values) {
+                  let attachmentId = await handleUpload(values["imageFile"]);
+                  console.log(attachmentId);
+                  if (attachmentId) {
+                    values["fileEntityId"] = attachmentId?.id;
+                  } else {
+                    return;
+                  }
+                }
+                console.log(initialValues);
                 handleSubmit(values);
                 onClose();
               }}
@@ -96,6 +128,26 @@ const EditModal = ({
                                 </SelectItem>
                               ))}
                           </Select>
+                        ) : field.type == "file" ? (
+                          <div className='flex flex-col items-center'>
+                            {values[field.name] && (
+                              <img
+                                src={URL.createObjectURL(values[field.name])}
+                                alt='Selected File'
+                                className='w-full h-[200px] object-contain'
+                              />
+                            )}
+                            <Input
+                              type='file'
+                              onChange={(e) => {
+                                setFieldValue(field?.name, e.target.files[0]);
+                              }}
+                              accept='image/*' // Optional: Specify the accepted file types (e.g., images)
+                            />
+                            {/* {values[field.name] && (
+                              <p>Selected File: {values[field.name].name}</p>
+                            )} */}
+                          </div>
                         ) : (
                           <Input
                             label={field.label}

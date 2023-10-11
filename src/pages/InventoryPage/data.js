@@ -2,6 +2,12 @@ import * as Yup from "yup";
 
 export const fields = [
   {
+    name: "imageFile",
+    type: "file",
+    label: "Fayl",
+    placeholder: "Faylni kiriting...",
+  },
+  {
     name: "name",
     type: "text",
     label: "Nomi",
@@ -46,6 +52,7 @@ export const columns = [
   { name: "IZOH", uid: "description", sortable: true },
 
   { name: "SANASI", uid: "createdAt" },
+  { name: "RASM", uid: "attachment.id" },
   // { name: "STATUS", uid: "status", sortable: true },
   { name: "ACTIONS", uid: "actions" },
 ];

@@ -7,15 +7,18 @@ import {
   createOutcome,
   deleteOutcome,
   getAllOutcomes,
+  getOutcomeTotalPrice,
   updateOutcome,
 } from "./outcomesSlice";
 import { getAllCategories } from "../Categories/categoriesSlice";
+import { getMoneyPattern } from "../../utils/regex";
 
 const OutgoingsPage = () => {
   const dispatch = useDispatch();
-  const { outcomes } = useSelector((state) => state.outcomes);
+  const { outcomes, totalPrice } = useSelector((state) => state.outcomes);
 
   useEffect(() => {
+    dispatch(getOutcomeTotalPrice());
     dispatch(getAllOutcomes());
     dispatch(getAllCategories());
   }, []);
@@ -24,7 +27,10 @@ const OutgoingsPage = () => {
     <div className='flex flex-col w-full h-full p-8 gap-8 bg-neutral-50'>
       <div className='flex flex-row w-full gap-8 items-center'>
         <span className='flex flex-col w-full items-center bg-red-200/50 text-red-600 rounded-xl py-3'>
-          Chiqim <span className='font-bold'>40 000 000 so'm</span>
+          Chiqim{" "}
+          <span className='font-bold'>{`${
+            totalPrice ? getMoneyPattern(totalPrice) : ""
+          } so'm`}</span>
         </span>
 
         <div className='flex-none'>

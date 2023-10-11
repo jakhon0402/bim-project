@@ -14,6 +14,12 @@ export const fields = [
     placeholder: "Familiyani kiriting...",
   },
   {
+    name: "jobDescription",
+    type: "text",
+    label: "Kasbi",
+    placeholder: "Kasbini kiriting...",
+  },
+  {
     name: "initialSalary",
     type: "number",
     label: "Boshlang'ich maosh",

@@ -10,6 +10,14 @@ export const getAllOutcomes = createAsyncThunk(
   }
 );
 
+export const getOutcomeTotalPrice = createAsyncThunk(
+  "incomes/getOutcomeTotalPrice",
+  async (body = {}) => {
+    const response = await Api.get("/outputitem/total-price");
+    return response.data;
+  }
+);
+
 export const createOutcome = createAsyncThunk(
   "outcomes/create",
   async (body) => {
@@ -38,6 +46,7 @@ const outcomesSlice = createSlice({
   name: "outcomes",
   initialState: {
     outcomes: null,
+    totalPrice: null,
     loading: false,
     error: null,
   },
@@ -57,6 +66,19 @@ const outcomesSlice = createSlice({
         state.outcomes = action.payload?.content;
       })
       .addCase(getAllOutcomes.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      ///------------ GET Outcome Total price ------------------/////
+      .addCase(getOutcomeTotalPrice.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getOutcomeTotalPrice.fulfilled, (state, action) => {
+        state.loading = false;
+        state.totalPrice = action.payload;
+      })
+      .addCase(getOutcomeTotalPrice.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

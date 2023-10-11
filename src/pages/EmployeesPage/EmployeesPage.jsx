@@ -25,6 +25,7 @@ const EmployeesPage = () => {
         </span>
         {employees && (
           <ProTable
+            viewButtonUrl='/employees'
             createSubmitHandler={(reqBody) => dispatch(createEmployee(reqBody))}
             editSubmitHandler={(reqBody) => dispatch(updateEmployee(reqBody))}
             deleteSubmitHandler={(id) => dispatch(deleteEmployee({ id }))}

@@ -23,6 +23,7 @@ import { capitalize } from "../utils/utils";
 import {
   ChevronDownIcon,
   EllipsisVerticalIcon,
+  EyeIcon,
   MagnifyingGlassIcon,
   PencilIcon,
   PlusIcon,
@@ -32,6 +33,8 @@ import CreateModal from "./Modals/CreateModal";
 import EditModal from "./Modals/EditModal";
 import DeleteModal from "./Modals/DeleteModal";
 import { useSelector } from "react-redux";
+import { getMoneyPattern } from "../utils/regex";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const statusColorMap = {
   active: "success",
@@ -44,6 +47,7 @@ const INITIAL_VISIBLE_COLUMNS = [
   "name",
   "surname",
   "initialSalary",
+  "attachment.id",
   "jobDescription",
   "salaryDate",
   "price",
@@ -64,7 +68,11 @@ const ProTable = ({
   createSubmitHandler,
   editSubmitHandler,
   deleteSubmitHandler,
+  viewButtonUrl,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   const { categories } = useSelector((state) => state.categories);
 
   const [selectCategories, setSelectCategories] = useState([]);
@@ -157,6 +165,25 @@ const ProTable = ({
             </p>
           </div>
         );
+
+      case "attachment.id":
+        return (
+          <div className='flex flex-col'>
+            <img
+              className='w-[80px]'
+              src={`http://localhost:8084/api/fayl/download/${user?.fileEntity?.id}`}
+            />
+          </div>
+        );
+
+      case "price":
+        return (
+          <div className='flex flex-col'>
+            <span className='font-bold'>{`${
+              cellValue ? getMoneyPattern(cellValue) : ""
+            } so'm`}</span>
+          </div>
+        );
       case "createdAt": {
         return (
           <div className='flex flex-col'>
@@ -187,6 +214,14 @@ const ProTable = ({
 
         return (
           <div className='relative flex items-center gap-5'>
+            {viewButtonUrl && (
+              <button
+                onClick={() => navigate(`${viewButtonUrl}/${user?.id}`)}
+                className='text-lg text-default-400 cursor-pointer active:opacity-50'
+              >
+                <EyeIcon className='w-[18px] text-green-500' />
+              </button>
+            )}
             <EditModal
               ctgs={categories}
               handleSubmit={(body) =>
@@ -194,7 +229,17 @@ const ProTable = ({
               }
               fields={editData?.fields}
               validationSchema={editData?.validationSchema}
-              initialValues={user}
+              initialValues={
+                location.pathname.startsWith("/inventory")
+                  ? {
+                      fileEntityId: user?.fileEntity?.id,
+                      name: user?.name,
+                      price: user?.price,
+                      count: user?.count,
+                      description: user?.description,
+                    }
+                  : user
+              }
             />
 
             <DeleteModal

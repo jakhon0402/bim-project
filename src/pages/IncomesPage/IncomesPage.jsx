@@ -6,16 +6,19 @@ import {
   createIncome,
   deleteIncome,
   getAllIncomes,
+  getIncomeTotalPrice,
   updateIncome,
 } from "./incomesSlice";
 import { getAllCategories } from "../Categories/categoriesSlice";
 import { fields, emptyValues, validationSchema, columns } from "./data";
+import { getMoneyPattern } from "../../utils/regex";
 
 const IncomesPage = () => {
   const dispatch = useDispatch();
-  const { incomes } = useSelector((state) => state.incomes);
+  const { incomes, totalPrice } = useSelector((state) => state.incomes);
 
   useEffect(() => {
+    dispatch(getIncomeTotalPrice());
     dispatch(getAllIncomes());
     dispatch(getAllCategories());
   }, []);
@@ -24,7 +27,10 @@ const IncomesPage = () => {
     <div className='flex flex-col w-full p-8 gap-8 bg-neutral-50 h-full'>
       <div className='flex flex-row w-full gap-8 items-center'>
         <span className='flex flex-col w-full items-center bg-green-200/50 text-green-600 rounded-xl py-3'>
-          Kirim <span className='font-bold'>40 000 000 so'm</span>
+          Kirim{" "}
+          <span className='font-bold'>{`${
+            totalPrice ? getMoneyPattern(totalPrice) : ""
+          } so'm`}</span>
         </span>
 
         <div className='flex-none'>
