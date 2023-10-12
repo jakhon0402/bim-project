@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Api from "../../config/Api";
 import { findIndex } from "lodash";
+import { dailyData, monthlyData } from "../../utils/statistics";
 
 export const getAllIncomes = createAsyncThunk(
   "incomes/getAll",
@@ -55,6 +56,9 @@ const incomesSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    clearIncomes: (state) => {
+      state.incomes = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -64,7 +68,9 @@ const incomesSlice = createSlice({
       })
       .addCase(getAllIncomes.fulfilled, (state, action) => {
         state.loading = false;
-        state.incomes = action.payload?.content;
+        state.incomes = action.payload?.content?.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
       })
       .addCase(getAllIncomes.rejected, (state, action) => {
         state.loading = false;
@@ -77,7 +83,9 @@ const incomesSlice = createSlice({
       })
       .addCase(getAllIncomesByDateRange.fulfilled, (state, action) => {
         state.loading = false;
-        state.incomes = action.payload;
+        let arr = action.payload;
+        arr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        state.incomes = arr;
       })
       .addCase(getAllIncomesByDateRange.rejected, (state, action) => {
         state.loading = false;
@@ -143,6 +151,6 @@ const incomesSlice = createSlice({
   },
 });
 
-export const { resetError } = incomesSlice.actions;
+export const { resetError, clearIncomes } = incomesSlice.actions;
 
 export default incomesSlice.reducer;

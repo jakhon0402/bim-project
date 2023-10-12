@@ -6,6 +6,7 @@ export const fields = [
     type: "text",
     label: "Nomi",
     placeholder: "Kirim nomini kiriting...",
+    isRequired: true,
   },
   {
     name: "description",
@@ -18,6 +19,7 @@ export const fields = [
     type: "text",
     label: "Narxi",
     placeholder: "Narxini kiriting...",
+    isRequired: true,
   },
   {
     name: "count",
@@ -30,6 +32,7 @@ export const fields = [
     type: "select",
     label: "Kategoriya",
     placeholder: "Kategoriyani tanlang...",
+    isRequired: true,
   },
 ];
 
@@ -54,4 +57,14 @@ export const columns = [
   { name: "SANASI", uid: "createdAt" },
   // { name: "STATUS", uid: "status", sortable: true },
   { name: "ACTIONS", uid: "actions" },
+];
+
+export const INITIAL_VISIBLE_COLUMNS = [
+  "id",
+  "name",
+  "price",
+  "description",
+  "createdAt",
+  "count",
+  "actions",
 ];

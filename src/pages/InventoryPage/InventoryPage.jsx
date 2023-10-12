@@ -2,7 +2,13 @@ import { Tab, Tabs } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import ProTable from "../../components/ProTable";
 import { useDispatch, useSelector } from "react-redux";
-import { fields, emptyValues, validationSchema, columns } from "./data";
+import {
+  fields,
+  emptyValues,
+  validationSchema,
+  columns,
+  INITIAL_VISIBLE_COLUMNS,
+} from "./data";
 import {
   createInventory,
   deleteInventory,
@@ -52,6 +58,7 @@ const InventoryPage = () => {
             editSubmitHandler={(reqBody) => dispatch(updateInventory(reqBody))}
             deleteSubmitHandler={(id) => dispatch(deleteInventory({ id }))}
             columns={columns}
+            initialVisibleColumns={INITIAL_VISIBLE_COLUMNS}
             tableData={inventory}
             createData={{
               fields,

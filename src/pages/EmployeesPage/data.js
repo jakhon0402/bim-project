@@ -23,12 +23,14 @@ export const fields = [
     type: "text",
     label: "Ismi",
     placeholder: "Ismini kiriting...",
+    isRequired: true,
   },
   {
     name: "surname",
     type: "text",
     label: "Familiya",
     placeholder: "Familiyani kiriting...",
+    isRequired: true,
   },
   {
     name: "jobDescription",
@@ -67,4 +69,15 @@ export const columns = [
   { name: "SANASI", uid: "createdAt" },
   // { name: "STATUS", uid: "status", sortable: true },
   { name: "ACTIONS", uid: "actions" },
+];
+
+export const INITIAL_VISIBLE_COLUMNS = [
+  "id",
+  "name",
+  "surname",
+  "currentSalary",
+  "jobDescription",
+  "salaryDate",
+  "createdAt",
+  "actions",
 ];

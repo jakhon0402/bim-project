@@ -6,6 +6,7 @@ export const fields = [
     type: "text",
     label: "Nomi",
     placeholder: "Kategoriya nomini kiriting...",
+    isRequired: true,
   },
 ];
 
@@ -24,3 +25,5 @@ export const columns = [
   // { name: "STATUS", uid: "status", sortable: true },
   { name: "ACTIONS", uid: "actions" },
 ];
+
+export const INITIAL_VISIBLE_COLUMNS = ["id", "name", "createdAt", "actions"];

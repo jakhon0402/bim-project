@@ -12,6 +12,7 @@ export const fields = [
     type: "text",
     label: "Nomi",
     placeholder: "Kirim nomini kiriting...",
+    isRequired: true,
   },
   {
     name: "description",
@@ -24,12 +25,14 @@ export const fields = [
     type: "text",
     label: "Narxi",
     placeholder: "Narxini kiriting...",
+    isRequired: true,
   },
   {
     name: "count",
     type: "number",
     label: "Soni",
     placeholder: "Sonini kiriting...",
+    isRequired: true,
   },
 ];
 
@@ -55,4 +58,15 @@ export const columns = [
   { name: "RASM", uid: "attachment.id" },
   // { name: "STATUS", uid: "status", sortable: true },
   { name: "ACTIONS", uid: "actions" },
+];
+
+export const INITIAL_VISIBLE_COLUMNS = [
+  "id",
+  "name",
+  "attachment.id",
+  "price",
+  "description",
+  "createdAt",
+  "count",
+  "actions",
 ];

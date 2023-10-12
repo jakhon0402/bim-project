@@ -1,6 +1,12 @@
 import React, { useEffect } from "react";
 import ProTable from "../../components/ProTable";
-import { fields, emptyValues, validationSchema, columns } from "./data";
+import {
+  fields,
+  emptyValues,
+  validationSchema,
+  columns,
+  INITIAL_VISIBLE_COLUMNS,
+} from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createCategory,
@@ -29,6 +35,7 @@ const CategoriesPage = () => {
             editSubmitHandler={(reqBody) => dispatch(updateCategory(reqBody))}
             deleteSubmitHandler={(id) => dispatch(deleteCategory({ id }))}
             columns={columns}
+            initialVisibleColumns={INITIAL_VISIBLE_COLUMNS}
             tableData={categories}
             createData={{
               fields,

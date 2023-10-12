@@ -42,28 +42,12 @@ const statusColorMap = {
   vacation: "warning",
 };
 
-const INITIAL_VISIBLE_COLUMNS = [
-  "id",
-  "name",
-  "surname",
-  "currentSalary",
-  "attachment.id",
-  "jobDescription",
-  "salaryDate",
-  "price",
-  "description",
-  "date",
-  "createdAt",
-  "count",
-  "status",
-  "actions",
-];
-
 const ProTable = ({
   createData,
   editData,
   tableData,
   columns,
+  initialVisibleColumns,
   isFilterCtg,
   createSubmitHandler,
   editSubmitHandler,
@@ -80,7 +64,7 @@ const ProTable = ({
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [visibleColumns, setVisibleColumns] = React.useState(
-    new Set(INITIAL_VISIBLE_COLUMNS)
+    new Set(initialVisibleColumns)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
   const [rowsPerPage, setRowsPerPage] = React.useState(5);

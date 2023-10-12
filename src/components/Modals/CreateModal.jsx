@@ -58,10 +58,12 @@ const CreateModal = ({
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement='top-center'>
         <Formik
+          // validate
+          // validateOnChange={true}
+          // validateOnBlur={t}
+          // validateOnBlur={true}
+          // validateOnChange={true}
           enableReinitialize
-          validateOnMount={false}
-          validateOnChange={false}
-          validateOnBlur={false}
           initialValues={initialValues}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
@@ -119,6 +121,7 @@ const CreateModal = ({
                       {fields?.map((field, index) =>
                         field.type === "select" ? (
                           <Select
+                            isRequired={field?.isRequired}
                             style={{ color: "#000" }}
                             selectionMode='single'
                             // selectedKeys={values[field?.name]}
@@ -168,6 +171,14 @@ const CreateModal = ({
                           </div>
                         ) : (
                           <Input
+                            // isInvalid={
+                            //   !touched[field.name] && !errors[field.name]
+                            // }
+                            isInvalid={
+                              touched[field.name] && Boolean(errors[field.name])
+                            }
+                            errorMessage={errors[field.name]}
+                            isRequired={field?.isRequired}
                             style={{ color: "#000", fontWeight: 500 }}
                             label={field.label}
                             // labelPlacement='outside'

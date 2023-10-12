@@ -64,6 +64,9 @@ const outcomesSlice = createSlice({
     resetError: (state) => {
       state.error = null;
     },
+    clearOutcomes: (state) => {
+      state.outcomes = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -85,7 +88,9 @@ const outcomesSlice = createSlice({
       })
       .addCase(getAllOutcomesByDateRange.fulfilled, (state, action) => {
         state.loading = false;
-        state.outcomes = action.payload;
+        let arr = action.payload;
+        arr.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        state.outcomes = arr;
       })
       .addCase(getAllOutcomesByDateRange.rejected, (state, action) => {
         state.loading = false;
@@ -151,6 +156,6 @@ const outcomesSlice = createSlice({
   },
 });
 
-export const { resetError } = outcomesSlice.actions;
+export const { resetError, clearOutcomes } = outcomesSlice.actions;
 
 export default outcomesSlice.reducer;

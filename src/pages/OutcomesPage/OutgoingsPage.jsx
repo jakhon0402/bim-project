@@ -1,7 +1,13 @@
 import { Tab, Tabs } from "@nextui-org/react";
 import React, { useEffect } from "react";
 import ProTable from "../../components/ProTable";
-import { fields, emptyValues, validationSchema, columns } from "./data";
+import {
+  fields,
+  emptyValues,
+  validationSchema,
+  columns,
+  INITIAL_VISIBLE_COLUMNS,
+} from "./data";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createOutcome,
@@ -60,9 +66,22 @@ const OutgoingsPage = () => {
         {outcomes && (
           <ProTable
             isFilterCtg={true}
-            createSubmitHandler={(reqBody) => dispatch(createOutcome(reqBody))}
-            editSubmitHandler={(reqBody) => dispatch(updateOutcome(reqBody))}
-            deleteSubmitHandler={(id) => dispatch(deleteOutcome({ id }))}
+            createSubmitHandler={(reqBody) =>
+              dispatch(createOutcome(reqBody)).then(() =>
+                dispatch(getOutcomeTotalPrice())
+              )
+            }
+            editSubmitHandler={(reqBody) =>
+              dispatch(updateOutcome(reqBody)).then(() =>
+                dispatch(getOutcomeTotalPrice())
+              )
+            }
+            deleteSubmitHandler={(id) =>
+              dispatch(deleteOutcome({ id })).then(() =>
+                dispatch(getOutcomeTotalPrice())
+              )
+            }
+            initialVisibleColumns={INITIAL_VISIBLE_COLUMNS}
             columns={columns}
             tableData={outcomes}
             createData={{

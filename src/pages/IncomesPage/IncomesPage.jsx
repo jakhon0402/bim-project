@@ -11,9 +11,16 @@ import {
   updateIncome,
 } from "./incomesSlice";
 import { getAllCategories } from "../Categories/categoriesSlice";
-import { fields, emptyValues, validationSchema, columns } from "./data";
+import {
+  fields,
+  emptyValues,
+  validationSchema,
+  columns,
+  INITIAL_VISIBLE_COLUMNS,
+} from "./data";
 import { formatDate, getMoneyPattern } from "../../utils/regex";
 import { DateRangePicker } from "rsuite";
+import { getOutcomeTotalPrice } from "../OutcomesPage/outcomesSlice";
 
 const IncomesPage = () => {
   const dispatch = useDispatch();
@@ -65,10 +72,23 @@ const IncomesPage = () => {
         {incomes && (
           <ProTable
             isFilterCtg={true}
-            createSubmitHandler={(reqBody) => dispatch(createIncome(reqBody))}
-            editSubmitHandler={(reqBody) => dispatch(updateIncome(reqBody))}
-            deleteSubmitHandler={(id) => dispatch(deleteIncome({ id }))}
+            createSubmitHandler={(reqBody) =>
+              dispatch(createIncome(reqBody)).then(() =>
+                dispatch(getIncomeTotalPrice())
+              )
+            }
+            editSubmitHandler={(reqBody) =>
+              dispatch(updateIncome(reqBody)).then(() =>
+                dispatch(getIncomeTotalPrice())
+              )
+            }
+            deleteSubmitHandler={(id) =>
+              dispatch(deleteIncome({ id })).then(() =>
+                dispatch(getIncomeTotalPrice())
+              )
+            }
             columns={columns}
+            initialVisibleColumns={INITIAL_VISIBLE_COLUMNS}
             tableData={incomes}
             createData={{
               fields,

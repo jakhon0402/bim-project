@@ -106,6 +106,7 @@ const EditModal = ({
                       {fields?.map((field, index) =>
                         field.type === "select" ? (
                           <Select
+                            isRequired={field?.isRequired}
                             selectionMode='single'
                             defaultSelectedKeys={[values[field?.name]]}
                             // name={field?.name}
@@ -150,6 +151,7 @@ const EditModal = ({
                           </div>
                         ) : (
                           <Input
+                            isRequired={field?.isRequired}
                             style={{ color: "#000", fontWeight: 500 }}
                             label={field.label}
                             placeholder={field.placeholder}

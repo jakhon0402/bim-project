@@ -1,7 +1,13 @@
 import React, { useEffect } from "react";
 import ProTable from "../../components/ProTable";
 import { useDispatch, useSelector } from "react-redux";
-import { fields, emptyValues, validationSchema, columns } from "./data";
+import {
+  fields,
+  emptyValues,
+  validationSchema,
+  columns,
+  INITIAL_VISIBLE_COLUMNS,
+} from "./data";
 import {
   createEmployee,
   deleteEmployee,
@@ -30,6 +36,7 @@ const EmployeesPage = () => {
             editSubmitHandler={(reqBody) => dispatch(updateEmployee(reqBody))}
             deleteSubmitHandler={(id) => dispatch(deleteEmployee({ id }))}
             columns={columns}
+            initialVisibleColumns={INITIAL_VISIBLE_COLUMNS}
             tableData={employees}
             createData={{
               fields,
