@@ -15,7 +15,7 @@ export const emptyValues = {
 };
 
 export const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string().required("Nomi bo'sh bo'lmasligi kerak!"),
 });
 
 export const columns = [

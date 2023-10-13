@@ -40,7 +40,8 @@ export const fields = [
   },
   {
     name: "currentSalary",
-    type: "number",
+    isRequired: true,
+    type: "text",
     label: "Boshlang'ich maosh",
     placeholder: "Narxini kiriting...",
   },
@@ -53,9 +54,11 @@ export const emptyValues = {
 };
 
 export const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  surname: Yup.string().required("Surname is required"),
-  currentSalary: Yup.number().required("Boshlang'ich maosh is required"),
+  name: Yup.string().required("Ismi bo'sh bo'lmasligi kerak!"),
+  surname: Yup.string().required("Familiyasi bo'sh bo'lmasligi kerak!"),
+  currentSalary: Yup.string()
+    .matches(/^\d+$/, "Iltimos raqam kiriting!")
+    .required("Boshlang'ich bo'sh bo'lmasligi kerak!"),
 });
 
 export const columns = [

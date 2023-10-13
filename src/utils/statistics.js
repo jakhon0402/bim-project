@@ -5,7 +5,7 @@ export const dailyData = (data) =>
     if (!acc[date]) {
       acc[date] = 0;
     }
-    acc[date] += item.price;
+    acc[date] += item.price * item.count;
     return acc;
   }, {});
 
@@ -15,6 +15,6 @@ export const monthlyData = (data) =>
     if (!acc[month]) {
       acc[month] = 0;
     }
-    acc[month] += item.price;
+    acc[month] += item.price * item.count;
     return acc;
   }, {});

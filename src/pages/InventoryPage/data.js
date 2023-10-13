@@ -29,7 +29,7 @@ export const fields = [
   },
   {
     name: "count",
-    type: "number",
+    type: "text",
     label: "Soni",
     placeholder: "Sonini kiriting...",
     isRequired: true,
@@ -41,10 +41,14 @@ export const emptyValues = {
 };
 
 export const validationSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  description: Yup.string().required("Description is required"),
-  price: Yup.string().required("Price is required"),
-  count: Yup.string().required("Count is required"),
+  name: Yup.string().required("Nomi bo'sh bo'lmasligi kerak!"),
+  description: Yup.string(),
+  price: Yup.string()
+    .matches(/^\d+$/, "Iltimos raqam kiriting!")
+    .required("Narxi bo'sh bo'lmasligi kerak!"),
+  count: Yup.string()
+    .matches(/^\d+$/, "Iltimos raqam kiriting!")
+    .required("Soni bo'sh bo'lmasligi kerak!"),
 });
 
 export const columns = [

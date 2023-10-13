@@ -121,6 +121,10 @@ const CreateModal = ({
                       {fields?.map((field, index) =>
                         field.type === "select" ? (
                           <Select
+                            isInvalid={
+                              touched[field.name] && Boolean(errors[field.name])
+                            }
+                            errorMessage={errors[field.name]}
                             isRequired={field?.isRequired}
                             style={{ color: "#000" }}
                             selectionMode='single'
