@@ -41,7 +41,6 @@ const statusColorMap = {
   paused: "danger",
   vacation: "warning",
 };
-
 const ProTable = ({
   createData,
   editData,
@@ -67,7 +66,7 @@ const ProTable = ({
     new Set(initialVisibleColumns)
   );
   const [statusFilter, setStatusFilter] = React.useState("all");
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "age",
     direction: "ascending",
@@ -343,7 +342,7 @@ const ProTable = ({
                   }
                   variant='flat'
                 >
-                  Columns
+                  Ustunlar
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
@@ -445,7 +444,7 @@ const ProTable = ({
       bottomContent={bottomContent}
       bottomContentPlacement='outside'
       classNames={{
-        wrapper: "max-h-[382px]",
+        wrapper: "max-h-[650px]",
       }}
       selectedKeys={selectedKeys}
       //   selectionMode='multiple'
